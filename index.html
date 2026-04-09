@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, Kristina 💗</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #09050f;
+      --bg2:      #100818;
+      --hot:      #ff2d78;
+      --pink:     #ff6fa8;
+      --blush:    #ffb3d1;
+      --pale:     #ffe6f1;
+      --cyan:     #5ff7e8;
+      --card:     rgba(255,255,255,0.055);
+      --border:   rgba(255,100,168,0.22);
+      --text:     #fff3f8;
+      --muted:    rgba(255,243,248,0.68);
+      --r:        20px;
+      --glow1:    rgba(255,45,120,0.55);
+      --glow2:    rgba(95,247,232,0.18);
+      --shadow:   0 24px 64px rgba(0,0,0,0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── BACKGROUND MESH ── */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 15% 10%,  rgba(255,45,120,0.18),  transparent),
+        radial-gradient(ellipse 50% 40% at 85% 5%,   rgba(95,247,232,0.08),  transparent),
+        radial-gradient(ellipse 60% 50% at 90% 90%,  rgba(255,45,120,0.12),  transparent),
+        radial-gradient(ellipse 80% 60% at 10% 85%,  rgba(130,60,255,0.10),  transparent),
+        linear-gradient(170deg, #09050f 0%, #0d0618 50%, #0a0514 100%);
+    }
+
+    /* ── SCANLINES ── */
+    .scanlines {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
+      opacity: 0.4;
+    }
+
+    /* ── FLOATING PARTICLES ── */
+    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .p { position: absolute; border-radius: 50%; animation: floatUp linear infinite; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) scale(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── LAYOUT ── */
+    .wrap {
+      position: relative; z-index: 1;
+      width: min(1080px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 38px 36px 34px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,111,168,0.28);
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      backdrop-filter: blur(22px);
+      box-shadow: 0 0 0 1px rgba(255,45,120,0.08), var(--shadow), 0 0 80px rgba(255,45,120,0.12);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute; right: -80px; top: -80px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(255,45,120,0.28), transparent 65%);
+      filter: blur(12px);
+      animation: pulse 5s ease-in-out infinite alternate;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; left: -60px; bottom: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(95,247,232,0.12), transparent 65%);
+      filter: blur(14px);
+    }
+
+    @keyframes pulse { from { opacity: 0.7; } to { opacity: 1; } }
+
+    .hero-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; position: relative; z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px; border-radius: 999px;
+      background: rgba(255,45,120,0.15);
+      border: 1px solid rgba(255,111,168,0.32);
+      color: var(--blush); font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    /* ── MUSIC BUTTON ── */
+    .music-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,111,168,0.3);
+      color: var(--blush); font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.82rem; letter-spacing: 0.05em;
+      cursor: pointer; transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+    }
+    .music-btn:hover { background: rgba(255,45,120,0.2); border-color: var(--pink); color: var(--pale); transform: scale(1.03); }
+    .music-btn.playing { background: rgba(255,45,120,0.25); border-color: var(--hot); }
+    .music-bars { display: flex; align-items: flex-end; gap: 2.5px; height: 14px; }
+    .music-bars span {
+      width: 3px; background: var(--pink); border-radius: 2px;
+      animation: none; transform-origin: bottom;
+    }
+    .music-btn.playing .music-bars span { animation: bar 0.8s ease-in-out infinite alternate; }
+    .music-bars span:nth-child(1) { height: 6px;  animation-delay: 0s; }
+    .music-bars span:nth-child(2) { height: 12px; animation-delay: 0.15s; }
+    .music-bars span:nth-child(3) { height: 9px;  animation-delay: 0.05s; }
+    .music-bars span:nth-child(4) { height: 14px; animation-delay: 0.25s; }
+    .music-bars span:nth-child(5) { height: 7px;  animation-delay: 0.1s; }
+    @keyframes bar { from { height: 3px; } to { height: 14px; } }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 6vw, 5.2rem);
+      line-height: 0.93;
+      letter-spacing: -0.04em;
+      margin: 22px 0 14px;
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, #fff 10%, var(--blush) 45%, var(--hot) 90%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 28px rgba(255,45,120,0.35));
+    }
+
+    .hero-sub {
+      color: var(--muted); font-size: 1rem; line-height: 1.75;
+      max-width: 620px; position: relative; z-index: 1;
+    }
+
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 18px; position: relative; z-index: 1;
+    }
+    .tag {
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem; color: var(--muted);
+      animation: tagIn 0.5s ease both;
+    }
+    .tag:nth-child(1) { animation-delay: 0.1s; }
+    .tag:nth-child(2) { animation-delay: 0.2s; }
+    .tag:nth-child(3) { animation-delay: 0.3s; }
+    .tag:nth-child(4) { animation-delay: 0.4s; }
+    @keyframes tagIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+    /* ── NAV ── */
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+
+    .nav-btn {
+      appearance: none;
+      border: 1px solid rgba(255,111,168,0.18);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,243,248,0.72);
+      border-radius: 14px;
+      padding: 13px 8px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.82rem;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-align: center; line-height: 1.4;
+    }
+    .nav-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,111,168,0.5);
+      background: rgba(255,45,120,0.12);
+      color: var(--pale);
+      box-shadow: 0 10px 28px rgba(255,45,120,0.2);
+    }
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--hot) 0%, #ff6fa8 100%);
+      color: #1a0010;
+      border-color: transparent;
+      box-shadow: 0 8px 28px rgba(255,45,120,0.42), 0 0 0 1px rgba(255,45,120,0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ── PANELS ── */
+    .panel {
+      display: none;
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(255,45,120,0.06);
+      animation: fadeUp 0.38s cubic-bezier(.22,.68,0,1.2);
+      overflow: hidden;
+    }
+    .panel.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px) scale(0.99); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+
+    .panel-inner { padding: 30px; }
+
+    .panel-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 8px;
+    }
+    .panel-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: rgba(255,45,120,0.18);
+      border: 1px solid rgba(255,111,168,0.3);
+      display: grid; place-items: center; font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .panel h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .panel .desc {
+      color: var(--muted); font-size: 0.93rem; line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    /* ── PHOTO CARDS ── */
+    .photo-card {
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,111,168,0.16);
+      background: rgba(0,0,0,0.22);
+      min-height: 230px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .photo-card:hover {
+      transform: scale(1.015);
+      box-shadow: 0 16px 44px rgba(255,45,120,0.22), 0 0 0 1px rgba(255,111,168,0.28);
+    }
+    .photo-card img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; min-height: 230px;
+    }
+    .photo-card .ph {
+      min-height: 230px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 20px; gap: 10px;
+      background: linear-gradient(135deg, rgba(255,45,120,0.1), rgba(255,255,255,0.03));
+    }
+    .photo-card .ph .ph-icon { font-size: 2.2rem; opacity: 0.6; }
+    .photo-card .ph .ph-label { color: rgba(255,243,248,0.5); font-size: 0.82rem; line-height: 1.55; }
+    .photo-card .ph .ph-path { color: rgba(255,111,168,0.7); font-size: 0.78rem; font-family: monospace; margin-top: 4px; }
+
+    /* ── LETTER BOX ── */
+    .letter-box {
+      border-radius: 16px;
+      border: 1px solid rgba(255,111,168,0.18);
+      background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      padding: 26px;
+      font-size: 0.975rem; line-height: 1.9;
+      color: #fff3f8;
+      white-space: pre-wrap;
+    }
+
+    .letter-box.main {
+      font-family: 'DM Sans', sans-serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    .letter-sig {
+      margin-top: 18px;
+      color: var(--pink);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* ── QUOTE BLOCK ── */
+    .quote {
+      margin-top: 18px;
+      padding: 18px 22px;
+      border-left: 3px solid var(--hot);
+      border-radius: 0 14px 14px 0;
+      background: rgba(255,45,120,0.08);
+      color: var(--blush);
+      font-style: italic;
+      line-height: 1.8;
+      font-size: 0.97rem;
+    }
+
+    /* ── MEANING SECTION ── */
+    .meaning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .meaning-card {
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,111,168,0.16);
+      background: rgba(255,45,120,0.07);
+    }
+    .meaning-card .mc-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      font-size: 2.8rem;
+      color: rgba(255,45,120,0.25);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .meaning-card .mc-text { font-size: 0.93rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── NEON DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,45,120,0.4), rgba(95,247,232,0.2), transparent);
+      margin: 22px 0;
+    }
+
+    /* ── PILL TAG ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(255,45,120,0.15);
+      border: 1px solid rgba(255,45,120,0.25);
+      color: var(--blush); font-size: 0.8rem;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+    }
+
+    /* ── DAY WE MET ── */
+    .met-text {
+      font-size: 1rem; line-height: 1.9; color: #fff3f8;
+    }
+    .met-text .highlight {
+      color: var(--pink);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+    }
+
+    .date-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,45,120,0.2), rgba(95,247,232,0.08));
+      border: 1px solid rgba(255,111,168,0.3);
+      color: var(--pale); font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.88rem;
+      margin-bottom: 18px; display: block; width: fit-content;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 40px; text-align: center;
+      color: rgba(255,243,248,0.25); font-size: 0.8rem;
+      position: relative; z-index: 1;
+    }
+    .footer span { color: var(--hot); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: rgba(20,5,20,0.95); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,111,168,0.35);
+      color: var(--blush); padding: 12px 22px; border-radius: 999px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem;
+      z-index: 1000; transition: transform 0.4s cubic-bezier(.22,.68,0,1.2);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── GLOW LINE ACCENT ── */
+    .neon-line {
+      height: 2px; border-radius: 99px;
+      background: linear-gradient(90deg, transparent, var(--hot), var(--cyan), var(--hot), transparent);
+      margin: 18px 0;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      .nav { grid-template-columns: repeat(3, 1fr); }
+      .grid-2, .meaning-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .nav { grid-template-columns: 1fr 1fr; }
+      .nav-btn { font-size: 0.75rem; padding: 11px 6px; }
+      .hero { padding: 24px 20px; }
+      .panel-inner { padding: 20px; }
+      h1 { font-size: clamp(2rem, 10vw, 3.5rem); }
+      .grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="scanlines"></div>
+<div class="particles" id="particles"></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <div class="badge">🎮 rivals &amp; random talks • 3 months strong</div>
+      <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+        <div class="music-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span id="musicLabel">♪ Double Take</span>
+      </button>
+    </div>
+
+    <h1>Happy Birthday,<br />Kristina 💗</h1>
+
+    <p class="hero-sub">
+      A little corner of the internet made just for you — packed with memories, honest words,
+      game chaos, and everything that makes this friendship feel real. Here's to 17, Orcie's got you. 🎉
+    </p>
+
+    <div class="hero-tags">
+      <span class="tag">🎮 Rivals duo</span>
+      <span class="tag">📅 April 10th — 3 months!</span>
+      <span class="tag">💌 Tamil Nadu → someday</span>
+      <span class="tag">🩺 Future NEET queen</span>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="sections">
+    <button class="nav-btn active" data-target="letter">💌<br />Letter</button>
+    <button class="nav-btn" data-target="meaning">✨<br />What You Mean</button>
+    <button class="nav-btn" data-target="games">🎮<br />Game Memories</button>
+    <button class="nav-btn" data-target="memes">😂<br />Meme Dump</button>
+    <button class="nav-btn" data-target="day">📍<br />Day We Met</button>
+  </nav>
+
+  <!-- PANEL: LETTER -->
+  <section id="letter" class="panel active">
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div class="panel-icon">💌</div>
+        <h2>Handwritten Letter</h2>
+      </div>
+      <p class="desc">From Orcie, with actual feelings (don't tell anyone).</p>
+      <div class="neon-line"></div>
+      <div class="grid-2">
+        <div class="photo-card">
+          <img src="images/handwritten-letter.jpg" alt="Handwritten letter"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none;">
+            <div class="ph-icon">📝</div>
+            <div class="ph-label">Your handwritten letter photo goes here</div>
+            <div class="ph-path">images/handwritten-letter.jpg</div>
+          </div>
+        </div>
+        <div class="letter-box main">Dear Kristina 😊
+
+Happy Birthdayyy 🎉
+
+Honestly it still feels crazy how fast these 3 months went. We bonded so quickly over rivals and random talks, and it never felt awkward or forced. It just happened naturally, and that's something I really appreciate.
+
+You're genuinely such a great friend. Playing rivals with you, talking about random stuff, and just hanging out online always makes my day better. I like how easy it is to talk to you, and how you somehow make even normal moments feel fun.
+
+We're completing 3 months of friendship on 10th April, and that actually means a lot to me. Not every online friendship lasts or feels this comfortable, but ours did, and I'm really glad about that.
+
+Also I'm still a bit jealous that you're 17 and I'm 16 😭 but it's fine, I'll catch up someday. Just wait.
+
+I want you to know that you mean a lot to me as a friend, and I'll always stand by your side whenever you need someone. You're honestly my best online friend, and I'm really thankful that we met.
+
+And if I ever come to Tamil Nadu in the future, I'd definitely like to visit you someday. That would be pretty cool after all the time we spent talking online.
+
+I really hope you pass NEET and make your parents proud. I know you're working hard, and I'm rooting for you from here.
+
+Anyway, just remember one thing —<div class="letter-sig">Orcie is always with you 🩷</div>
+
+Happy Birthday again, Kristina. Hope your day is full of good vibes, wins, and zero bad teammates.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: MEANING -->
+  <section id="meaning" class="panel">
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div class="panel-icon">✨</div>
+        <h2>What You Mean to Me</h2>
+      </div>
+      <p class="desc">No filter. Just honest.</p>
+      <div class="neon-line"></div>
+
+      <div class="meaning-grid">
+        <div class="meaning-card">
+          <div class="mc-num">01</div>
+          <div class="mc-text">You make online friendship feel like it actually means something. That's rare, and I don't take it for granted.</div>
+        </div>
+        <div class="meaning-card">
+          <div class="mc-num">02</div>
+          <div class="mc-text">Talking to you is effortless. No awkward silences, no forced topics — just easy, natural, comfortable.</div>
+        </div>
+        <div class="meaning-card">
+          <div class="mc-num">03</div>
+          <div class="mc-text">You have this calm energy that somehow makes everything better, even the chaotic rivals moments 😭</div>
+        </div>
+        <div class="meaning-card">
+          <div class="mc-num">04</div>
+          <div class="mc-text">You're working so hard for NEET and that's genuinely inspiring. I'm rooting for you with my whole heart.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="letter-box">You are one of those people who make the internet feel less random and a lot more worth showing up for. I love how easy it is to laugh with you, play with you, and just exist in the same little world together.
+
+You've got this gamer-girl energy that makes everything more fun, and I genuinely value having you around. Three months in and it already feels like we've known each other for way longer.
+
+This is your day — I hope it comes with good vibes, great luck, and at least one moment that makes you grin for no reason.</div>
+
+      <div class="quote">
+        "Some people are just nice to know. You're one of the people I'm actually really glad I found." 💗
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: GAMES -->
+  <section id="games" class="panel">
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div class="panel-icon">🎮</div>
+        <h2>In-Game Memories</h2>
+      </div>
+      <p class="desc">The W moments, the chaos, the "HOW DID THAT HAPPEN" screenshots — all of it.</p>
+      <div class="neon-line"></div>
+      <div class="grid-2">
+        <div class="photo-card">
+          <img src="images/game-1.jpg" alt="Game screenshot 1"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none;">
+            <div class="ph-icon">🎮</div>
+            <div class="ph-label">First game screenshot</div>
+            <div class="ph-path">images/game-1.jpg</div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <img src="images/game-2.jpg" alt="Game screenshot 2"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none;">
+            <div class="ph-icon">🕹️</div>
+            <div class="ph-label">Second game screenshot</div>
+            <div class="ph-path">images/game-2.jpg</div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="letter-box" style="font-size:0.92rem;">
+Three months of rivals and not a single dull session. Whether we were actually winning or absolutely falling apart, it was always better because you were there. The chaos hits different with a good duo. 🎮⚡
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: MEMES -->
+  <section id="memes" class="panel">
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div class="panel-icon">😂</div>
+        <h2>Meme Dump</h2>
+      </div>
+      <p class="desc">The funny stuff. The stuff only the two of you get. No explanation needed.</p>
+      <div class="neon-line"></div>
+      <div class="grid-4">
+        <div class="photo-card" style="min-height:200px;">
+          <img src="images/meme-1.jpg" alt="Meme 1"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none; min-height:200px;">
+            <div class="ph-icon">😭</div>
+            <div class="ph-label">Meme 1</div>
+            <div class="ph-path">images/meme-1.jpg</div>
+          </div>
+        </div>
+        <div class="photo-card" style="min-height:200px;">
+          <img src="images/meme-2.jpg" alt="Meme 2"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none; min-height:200px;">
+            <div class="ph-icon">💀</div>
+            <div class="ph-label">Meme 2</div>
+            <div class="ph-path">images/meme-2.jpg</div>
+          </div>
+        </div>
+        <div class="photo-card" style="min-height:200px;">
+          <img src="images/meme-3.jpg" alt="Meme 3"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none; min-height:200px;">
+            <div class="ph-icon">🙂</div>
+            <div class="ph-label">Meme 3</div>
+            <div class="ph-path">images/meme-3.jpg</div>
+          </div>
+        </div>
+        <div class="photo-card" style="min-height:200px;">
+          <img src="images/meme-4.jpg" alt="Meme 4"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none; min-height:200px;">
+            <div class="ph-icon">🤡</div>
+            <div class="ph-label">Meme 4</div>
+            <div class="ph-path">images/meme-4.jpg</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px; color:var(--muted); font-size:0.87rem; text-align:center;">
+        Only the two of you will get half of these. That's the whole point. 💀
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: DAY WE MET -->
+  <section id="day" class="panel">
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div class="panel-icon">📍</div>
+        <h2>The Day We Met</h2>
+      </div>
+      <p class="desc">The moment it all started — a normal day that quietly became something more.</p>
+      <div class="neon-line"></div>
+
+      <span class="date-badge">📅 10th April — Friendship turns 3 months 🩷</span>
+
+      <div class="grid-2">
+        <div class="photo-card" style="min-height:260px;">
+          <img src="images/day-we-met.jpg" alt="The day we met"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="ph" style="display:none; min-height:260px;">
+            <div class="ph-icon">🌸</div>
+            <div class="ph-label">The screenshot or moment from when you first met</div>
+            <div class="ph-path">images/day-we-met.jpg</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px; justify-content:center;">
+          <div class="met-text">
+            It started like any other random online thing. A game, a conversation, maybe something a little awkward at first — and then somehow it just <span class="highlight">clicked</span>.
+
+Three months later and it's still that easy. Still that comfortable. Still the kind of friendship that makes you glad you showed up that day.
+
+<span class="highlight">That random day quietly became one of the better things to happen this year.</span>
+
+I'm glad we met, Kristina. Really glad.
+
+Happy 17th. Here's to more wins, more chaos, and a lot more time in the same little online world together. 🩷
+          </div>
+          <div class="quote" style="margin-top:0;">
+            "It started as a random game session and turned into one of the most comfortable friendships I have online." 🎮💗
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">Made with 🩷 by Orcie — just for <span>Kristina</span></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HIDDEN AUDIO -->
+<audio id="bgAudio" loop preload="none">
+  <source src="https://www.youtube.com/embed/watch?v=RL3d-4m_rbs" type="audio/mpeg" />
+</audio>
+
+<script>
+  /* ── PARTICLES ── */
+  (function() {
+    const container = document.getElementById('particles');
+    const colors = ['#ff2d78','#ff6fa8','#ffb3d1','#5ff7e8','#c084fc','#ff9ec4'];
+    const shapes = ['♥','✦','★','✿','◆','·'];
+    for (let i = 0; i < 38; i++) {
+      const el = document.createElement('div');
+      el.className = 'p';
+      const size = Math.random() * 8 + 3;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.cssText = `
+        left: ${Math.random()*100}%;
+        width: ${size}px; height: ${size}px;
+        font-size: ${size + 2}px;
+        color: ${color};
+        background: none;
+        animation-duration: ${Math.random()*22+14}s;
+        animation-delay: ${Math.random()*18}s;
+        opacity: 0;
+        border-radius: 0;
+        display: flex; align-items: center; justify-content: center;
+        line-height: 1;
+      `;
+      el.textContent = shape;
+      container.appendChild(el);
+    }
+  })();
+
+  /* ── NAV ── */
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const panels  = document.querySelectorAll('.panel');
+
+  function openPanel(id) {
+    navBtns.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+    panels.forEach(p  => p.classList.toggle('active',  p.id === id));
+    const el = document.getElementById(id);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+
+  navBtns.forEach(b => b.addEventListener('click', () => openPanel(b.dataset.target)));
+
+  /* ── MUSIC ── */
+  let playing = false;
+  // We use a YouTube embed approach for music since direct mp3 isn't available
+  // The user should provide the audio file or we open YouTube
+  let ytWin = null;
+
+  function toggleMusic() {
+    const btn = document.getElementById('musicBtn');
+    const label = document.getElementById('musicLabel');
+    playing = !playing;
+    btn.classList.toggle('playing', playing);
+    if (playing) {
+      label.textContent = '▐▐ Double Take';
+      // Open YouTube in background popup - user will need to interact with it
+      showToast('🎵 Opening Double Take by dhruv...');
+      setTimeout(() => {
+        ytWin = window.open('https://www.youtube.com/watch?v=RL3d-4m_rbs', '_blank', 'width=400,height=300,left=0,top=0');
+        showToast('🎵 Now playing — Double Take ♪');
+      }, 400);
+    } else {
+      label.textContent = '♪ Double Take';
+      if (ytWin) { ytWin.close(); ytWin = null; }
+      showToast('⏸ Music paused');
+    }
+  }
+
+  /* ── TOAST ── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  /* ── ENTRANCE ── */
+  window.addEventListener('load', () => {
+    setTimeout(() => showToast('🎉 Happy Birthday, Kristina! 💗'), 800);
+  });
+</script>
+</body>
+</html>
